@@ -1,0 +1,146 @@
+/*
+ * Claude Theme for Typora - Ultra Polished Final (with Darker HR)
+ * 核心修复：大纲/文件列表 Hover 逻辑、Active 反白、加深分割线颜色
+ */
+
+:root {
+    --claude-primary: rgb(198, 97, 63);
+    --claude-primary-hover: rgb(178, 77, 43);
+    --bg-color: #f1ede6;        
+    --page-bg: #f7f3ee;         
+    --text-color: #2c2621;
+    --text-secondary: #615e5a;
+    --heading-color: #1a1714;
+    --code-bg: #ebe4db;
+    --border-color: #ddd9d3;
+    --hr-color: #b8b0a5; /* 新增：加深后的分割线颜色 */
+    --hover-bg: rgba(0, 0, 0, 0.06); 
+    --sidebar-bg: #ebe8e3;      
+}
+
+/* ==================== 1. 基础样式 ==================== */
+html { font-size: 16px; }
+body {
+    font-family: "Charter", "Georgia", "PingFang SC", "Microsoft YaHei", serif;
+    color: var(--text-color);
+    line-height: 1.75;
+    background-color: var(--bg-color);
+    -webkit-font-smoothing: antialiased;
+}
+
+#write {
+    max-width: 860px;
+    margin: 40px auto 120px;
+    padding: 40px 60px 60px;
+    background: var(--page-bg);
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* ==================== 2. 侧边栏整体清理 ==================== */
+#typora-sidebar, .typora-sidebar-content, .sidebar-content, 
+.file-list-content-tree, .file-library-node, .file-tree-node {
+    background-color: var(--sidebar-bg) !important;
+    border: none !important;
+}
+
+.file-tree-node::before, .file-tree-node::after,
+.outline-item::before, .outline-content::before {
+    display: none !important;
+}
+
+/* ==================== 3. 文件列表 & 大纲项 ==================== */
+.file-node-content,
+.outline-item {
+    margin: 2px 12px !important;
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+    border: none !important;
+    transition: background-color 0.15s ease-in-out, color 0.1s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.file-node-content:hover,
+.outline-item:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+.file-node-content:hover .file-node-main-title,
+.file-node-content:hover .file-node-icon,
+.outline-item:hover .outline-label,
+.outline-item:hover .outline-expander {
+    color: var(--claude-primary) !important; 
+}
+
+.file-list-item.active .file-node-content,
+.file-tree-node.active > .file-node-content,
+.outline-item-active,
+.ty-outline-item-active {
+    background-color: var(--claude-primary) !important;
+    box-shadow: 0 2px 8px rgba(198, 97, 63, 0.2);
+}
+
+.active .file-node-content *,
+.active .file-node-main-title,
+.active .file-node-icon,
+.outline-item-active .outline-label,
+.outline-item-active .outline-expander,
+.ty-outline-item-active .outline-label {
+    color: #ffffff !important;
+}
+
+.outline-label {
+    color: var(--text-color) !important;
+    font-weight: 400;
+}
+.outline-expander {
+    color: var(--text-secondary) !important;
+}
+
+/* ==================== 4. 正文 & UI 细节 ==================== */
+h1, h2, h3 { color: var(--heading-color); font-weight: 600; margin-top: 1.5em; }
+h1 { font-size: 2.1em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3em; }
+
+/* 分隔符 (---) 样式加深修改处 */
+hr {
+    height: 1px;
+    border: none;
+    border-top: 1px solid var(--claude-primary); 
+    margin: 2.5em 0;
+}
+
+a { color: var(--link-color); text-decoration: none; border-bottom: 1px dotted rgba(198, 97, 63, 0.5); }
+a:hover { border-bottom-style: solid; }
+
+blockquote {
+    border-left: 3px solid var(--claude-primary);
+    background: var(--code-bg);
+    padding: 1em 1.2em;
+    color: var(--text-secondary);
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+}
+
+code { background: var(--code-bg); padding: 2px 5px; border-radius: 4px; font-size: 0.9em; }
+
+pre.md-fences { background: var(--code-bg); border-radius: 10px; padding: 1.2em; border: none !important; }
+
+.task-list-item input[type="checkbox"] {
+    width: 16px; height: 16px; appearance: none;
+    border: 1px solid var(--border-color); border-radius: 4px; background: #fff;
+    vertical-align: middle; margin-top: -3px; cursor: pointer;
+}
+.task-list-item input[type="checkbox"]:checked {
+    background: var(--claude-primary); border-color: var(--claude-primary);
+}
+.task-list-item input[type="checkbox"]:checked::before {
+    content: '✓'; color: white; position: absolute; margin-left: 2px; font-size: 11px;
+}
+
+#top-titlebar { background: var(--sidebar-bg); border-bottom: 1px solid var(--border-color); }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--claude-primary); }
