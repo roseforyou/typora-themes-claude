@@ -1,49 +1,325 @@
 /*
- * Claude Theme for Typora
- * Styled after Claude.ai — warm off-white, coral/orange accents
+ * Claude Theme for Typora — v2
+ * Faithful to Claude.ai's design language:
+ *   - Warm paper palette (Claude's "Clio" off-white)
+ *   - Serif headings (editorial / book feel)
+ *   - Coral-terracotta accent
+ *   - Minimal decoration, generous whitespace
  */
 
 :root {
-  --claude-primary: rgb(198, 97, 63);
-  --claude-primary-hover: rgb(178, 77, 43);
-  --link-color: rgb(198, 97, 63);
-  --bg-color: #f1ede6;
-  --page-bg: #f7f3ee;
-  --text-color: #2c2621;
-  --text-secondary: #615e5a;
-  --heading-color: #1a1714;
-  --code-bg: #ebe4db;
-  --border-color: #ddd9d3;
-  --hover-bg: rgba(0, 0, 0, 0.06);
-  --sidebar-bg: #ebe8e3;
+  /* Core accent */
+  --claude-primary: #c15f3c;
+  --claude-primary-hover: #a84e2f;
+  --claude-primary-soft: rgba(193, 95, 60, 0.08);
+  --claude-primary-border: rgba(193, 95, 60, 0.28);
+  --link-color: #c15f3c;
+
+  /* Surfaces — warm paper tones */
+  --bg-color: #f0ebe1; /* Outer canvas */
+  --page-bg: #faf7f0; /* Writing card */
+  --sidebar-bg: #ebe6db;
+  --code-bg: #eee7da; /* Inline code + code blocks */
+  --hover-bg: rgba(40, 34, 29, 0.05);
+
+  /* Text */
+  --text-color: #3d3929;
+  --text-secondary: #78726a;
+  --heading-color: #1f1b17;
+
+  /* Borders — subtle warm */
+  --border-color: #e0d9ca;
+  --border-subtle: #ebe5d7;
+
+  /* Typography stacks */
+  --font-serif:
+    'Source Serif 4', 'Source Serif Pro', 'Tiempos Text', 'Charter', 'Georgia', 'Songti SC',
+    'STSong', 'Noto Serif CJK SC', serif;
+  --font-sans:
+    'Inter', '-apple-system', 'SF Pro Text', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei',
+    sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'PingFang SC', monospace;
 }
 
-/* ==================== 1. 基础样式 ==================== */
+/* ==================== 1. 基础 ==================== */
 html {
   font-size: 16px;
 }
 
 body {
-  font-family: 'Inter', 'SF Pro Text', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: var(--font-sans);
   color: var(--text-color);
   line-height: 1.75;
   background-color: var(--bg-color);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #write {
-  /* max-width: 860px;
-    margin: 40px auto 120px;
-    padding: 40px 60px 60px; */
-  max-width: 80%;
-  margin: 0 auto;
-  padding: 20px 30px 100px;
+  max-width: 780px; /* 理想阅读行宽 ~70ch */
+  margin: 40px auto 60px; /* 上下留白，卡片"浮"起来 */
+  padding: 56px 64px 80px; /* 内边距也稍微加大，呼吸感 */
   background: var(--page-bg);
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  /* 扁平化阴影：几乎不可见的描边 + 轻微底阴影 */
+  box-shadow:
+    0 0 0 1px rgba(40, 34, 29, 0.04),
+    0 1px 3px rgba(40, 34, 29, 0.04);
 }
 
-/* ==================== 2. 侧边栏整体清理 ==================== */
+@media (max-width: 900px) {
+  #write {
+    margin: 20px auto 40px;
+    padding: 32px 24px;
+    border-radius: 8px;
+  }
+}
+
+p {
+  margin: 1em 0;
+}
+
+/* ==================== 2. 标题 — 衬线体，Claude 编辑感灵魂 ==================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  color: var(--heading-color);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin-top: 0.4em;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--border-subtle); /* 细线，不抢眼 */
+}
+h2 {
+  font-size: 1.55em;
+  margin-top: 1.8em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+h3 {
+  font-size: 1.25em;
+  margin-top: 1.6em;
+}
+h4 {
+  font-size: 1.08em;
+  margin-top: 1.4em;
+}
+
+/* h5/h6 改用 sans + 小字号全大写，做"小节标签"气质 */
+h5,
+h6 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+h5 {
+  font-size: 0.88em;
+  color: var(--text-color);
+  margin-top: 1.2em;
+}
+h6 {
+  font-size: 0.82em;
+  color: var(--text-secondary);
+  margin-top: 1.1em;
+}
+
+/* ==================== 3. 正文强调 ==================== */
+strong {
+  color: var(--heading-color);
+  font-weight: 600;
+}
+
+/* em 用衬线斜体 —— Claude 文档里最有味道的一个小细节 */
+em {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--claude-primary-border);
+  transition: border-color 0.15s ease;
+}
+a:hover {
+  border-bottom-color: var(--claude-primary);
+}
+
+/* ==================== 4. 分隔线 — 极简 ==================== */
+hr {
+  height: 1px;
+  border: none;
+  background: var(--border-subtle);
+  margin: 2.8em 0;
+}
+
+/* ==================== 5. 引用块 — 极简，无底色 ==================== */
+blockquote {
+  border-left: 3px solid var(--claude-primary);
+  background: transparent;
+  padding: 0.2em 0 0.2em 1.4em;
+  margin: 1.5em 0;
+  color: var(--text-secondary);
+  font-style: normal; /* 去掉原来的 italic，太俗 */
+  border-radius: 0;
+}
+blockquote p {
+  margin: 0.6em 0;
+}
+
+/* 嵌套引用层级区分 */
+blockquote blockquote {
+  border-left-color: var(--border-color);
+  margin: 0.8em 0;
+}
+
+/* ==================== 6. 代码 ==================== */
+code {
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.88em;
+  font-family: var(--font-mono);
+  color: #8b3a1f; /* 行内代码用更深的橙褐，和主色呼应 */
+}
+
+pre.md-fences {
+  background: var(--code-bg);
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 10px;
+  padding: 1.1em 1.3em;
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  line-height: 1.65;
+}
+
+pre.md-fences code {
+  background: transparent;
+  color: var(--text-color); /* 代码块内恢复正常颜色，交给语法高亮 */
+  padding: 0;
+}
+
+/* ==================== 7. 列表 ==================== */
+ul,
+ol {
+  padding-left: 1.8em;
+}
+li {
+  margin: 0.3em 0;
+}
+li::marker {
+  color: var(--claude-primary);
+}
+
+/* ==================== 8. 任务列表 (Checkbox) ==================== */
+/* 用 #write 前缀压过 Typora 内置规则 */
+#write .task-list-item input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1.5px solid var(--border-color);
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+  margin-top: calc(1em - 13px);
+}
+
+#write .task-list-item input[type='checkbox']:hover {
+  border-color: var(--claude-primary);
+}
+
+#write .task-list-item input[type='checkbox']:checked {
+  background-color: var(--claude-primary);
+  border-color: var(--claude-primary);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='3.5,8.5 6.5,11.5 12.5,5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px 12px;
+}
+
+/* 已完成任务文字弱化 */
+.task-list-done > p,
+.task-list-item.task-list-done > p {
+  color: var(--text-secondary);
+}
+
+/* ==================== 9. 图片 ==================== */
+img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 14px rgba(40, 34, 29, 0.06);
+  display: block;
+  margin: 1.6em auto;
+}
+
+/* ==================== 10. kbd 键盘键 ==================== */
+kbd {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-size: 0.82em;
+  font-family: var(--font-mono);
+  color: var(--text-color);
+  box-shadow: 0 1px 0 rgba(40, 34, 29, 0.04);
+}
+
+/* ==================== 11. 表格 — 圆角，无内竖线 ==================== */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  margin: 1.8em 0;
+  font-size: 0.94em;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th,
+td {
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 10px 16px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--sidebar-bg);
+  color: var(--heading-color);
+  font-weight: 600;
+  font-size: 0.92em;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+tr:hover td {
+  background-color: var(--hover-bg);
+}
+
+/* 覆盖原来偶数行底色的规则 */
+tr:nth-child(even) td {
+  background-color: transparent;
+}
+
+/* ==================== 12. 侧边栏 ==================== */
 #typora-sidebar,
 .typora-sidebar-content,
 .sidebar-content,
@@ -61,7 +337,6 @@ body {
   display: none !important;
 }
 
-/* ==================== 3. 文件列表 & 大纲项 ==================== */
 .file-node-content,
 .outline-item {
   margin: 2px 12px !important;
@@ -69,7 +344,7 @@ body {
   border-radius: 8px !important;
   border: none !important;
   transition:
-    background-color 0.15s ease-in-out,
+    background-color 0.15s,
     color 0.1s;
   cursor: pointer;
   display: flex;
@@ -93,7 +368,7 @@ body {
 .outline-item-active,
 .ty-outline-item-active {
   background-color: var(--claude-primary) !important;
-  box-shadow: 0 2px 8px rgba(198, 97, 63, 0.2);
+  box-shadow: 0 2px 8px rgba(193, 95, 60, 0.22);
 }
 
 .active .file-node-content *,
@@ -109,201 +384,45 @@ body {
   color: var(--text-color) !important;
   font-weight: 400;
 }
-
 .outline-expander {
   color: var(--text-secondary) !important;
 }
 
-/* ==================== 4. 重命名输入框 ==================== */
+/* 重命名输入框 */
 .file-list-item.active .file-node-content input,
 .file-tree-node.active > .file-node-content input,
 .file-node-content input[type='text'],
 .file-rename-input {
-  color: #1a1714 !important;
+  color: var(--heading-color) !important;
   background-color: #fff !important;
   border: 1px solid var(--claude-primary) !important;
   border-radius: 4px !important;
   padding: 2px 6px !important;
 }
 
-/* ==================== 5. 标题 ==================== */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--heading-color);
-  font-weight: 600;
-  margin-top: 1.5em;
-}
-
-h1 {
-  font-size: 2.1em;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.3em;
-}
-h2 {
-  font-size: 1.5em;
-}
-h3 {
-  font-size: 1.2em;
-}
-h4 {
-  font-size: 1.05em;
-}
-h5 {
-  font-size: 1em;
-  color: var(--text-secondary);
-}
-h6 {
-  font-size: 0.95em;
-  color: var(--text-secondary);
-  font-weight: 400;
-  font-style: italic;
-}
-
-/* ==================== 6. 正文元素 ==================== */
-a {
-  color: var(--link-color);
-  text-decoration: none;
-  border-bottom: 1px dotted rgba(198, 97, 63, 0.5);
-}
-a:hover {
-  border-bottom-style: solid;
-}
-
-hr {
-  height: 1px;
-  border: none;
-  border-top: 1px solid var(--claude-primary);
-  margin: 2.5em 0;
-}
-
-blockquote {
-  border-left: 3px solid var(--claude-primary);
-  background: var(--code-bg);
-  padding: 1em 1.2em;
-  color: var(--text-secondary);
-  font-style: italic;
-  border-radius: 0 6px 6px 0;
-}
-
-code {
-  background: var(--code-bg);
-  padding: 2px 5px;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-
-pre.md-fences {
-  background: var(--code-bg);
-  border-radius: 10px;
-  padding: 1.2em;
-  border: none !important;
-}
-
-li::marker {
-  color: var(--claude-primary);
-}
-
-img {
-  max-width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  display: block;
-  margin: 1em auto;
-}
-
-kbd {
-  background: var(--code-bg);
-  border: 1px solid var(--border-color);
-  border-bottom-width: 2px;
-  border-radius: 4px;
-  padding: 1px 6px;
-  font-size: 0.85em;
-  font-family: monospace;
-}
-
-/* ==================== 7. 表格 ==================== */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1.5em 0;
-  font-size: 0.95em;
-}
-
-th,
-td {
-  border: 1px solid var(--border-color);
-  padding: 8px 14px;
-  text-align: left;
-}
-
-th {
-  background-color: var(--code-bg);
-  color: var(--heading-color);
-  font-weight: 600;
-}
-
-tr:nth-child(even) td {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
-/* ==================== 8. Checkbox ==================== */
-/* 必须用 #write 前缀，才能覆盖 Typora 内置的 */
-/* #write input[type="checkbox"] { width: inherit; height: inherit } */
-#write .task-list-item input[type='checkbox'] {
-  width: 16px;
-  height: 16px;
-  appearance: none;
-  -webkit-appearance: none;
-  border: 1.5px solid var(--border-color);
-  border-radius: 4px;
-  background-color: #fff;
-  cursor: pointer;
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease;
-  /* Typora 默认 margin-top 按 10px 尺寸算，16px 需要重新对齐 */
-  margin-top: calc(1em - 13px);
-}
-
-#write .task-list-item input[type='checkbox']:hover {
-  border-color: var(--claude-primary);
-}
-
-#write .task-list-item input[type='checkbox']:checked {
-  background-color: var(--claude-primary);
-  border-color: var(--claude-primary);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='3.5,8.5 6.5,11.5 12.5,5'/></svg>");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 14px 14px;
-}
-
-#write .task-list-item input[type='checkbox']:checked::before {
-  content: none;
-}
-
-/* ==================== 9. 杂项 UI ==================== */
+/* ==================== 13. 杂项 UI ==================== */
 #top-titlebar {
   background: var(--sidebar-bg);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 ::selection {
-  background-color: rgba(198, 97, 63, 0.18);
+  background-color: rgba(193, 95, 60, 0.2);
   color: var(--heading-color);
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 10px;
+  border: 2px solid var(--bg-color); /* 悬浮感 */
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--claude-primary);
+  background: var(--text-secondary);
 }
