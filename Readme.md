@@ -19,7 +19,7 @@
 
 - 🔤 **衬线标题** — 标题全部改用 Source Serif 4 / Charter / Georgia 衬线字体栈，Claude.ai 最标志性的"编辑器"气质来源
 - ✒️ **`<em>` 衬线斜体** — 正文中的 _斜体_ 自动切换为衬线斜体，细节见品位
-- 📏 **780px 最佳阅读行宽** — 从原来的 80% 收窄至 70 字符黄金阅读宽度
+- 📏 **自适应多档行宽** — 基础宽度 85%（最大 1100px），并针对 1080p（1280px）、2K（1500px）、4K/带鱼屏（1800px）分辨率自动阶梯式放大，兼顾舒适留白与大屏利用率
 - 🎭 **极简 Blockquote** — 去掉底色与斜体，只留一条珊瑚橙左边框
 - 📐 **扁平化阴影** — 页面卡片阴影从 `0 10px 25px` 压薄为 1px 描边，更贴近 Claude.ai 的扁平感
 - 🎨 **更暖的纸质配色** — 背景、文字、边框全部重新调校，整体更接近真 Claude UI
@@ -33,6 +33,7 @@
 - 🎨 **温暖的纸质配色** — 米白底 `#FAF7F0`，搭配 Claude 标志性的珊瑚橙 `#C15F3C` 作为强调色
 - 🔤 **衬线 + 无衬线混排** — 标题衬线、正文无衬线、`<em>` 衬线斜体，编辑感十足
 - 📝 **全面覆盖 Markdown 元素** — 标题、引用、代码、表格、任务列表等均经过精心设计
+- 🖥️ **分辨率自适应** — 自动适配笔记本、1080p、2K、4K 与带鱼屏，兼顾阅读行宽与大屏视野
 - 🧭 **侧边栏美化** — 文件列表与大纲项圆角高亮，选中态使用品牌色填充
 - 🖱️ **精致交互细节** — 链接悬浮、checkbox 勾选动画、滚动条悬浮感、选中高亮等
 - 🔤 **完善的字体栈** — 中英文兼顾，无需额外安装也能优雅降级
@@ -74,6 +75,7 @@
 
 ## 🛠️ 自定义
 
+### 颜色与字体
 修改 `claude.css` 顶部 `:root` 中的 CSS 变量即可微调：
 
 ```css
@@ -90,6 +92,11 @@
   --font-mono: 'JetBrains Mono', 'Consolas', monospace;
 }
 ```
+
+### 调整显示宽度
+在 `claude.css` 中搜索 `#write`，可根据个人屏幕与阅读习惯微调：
+- **默认宽度**：修改 `max-width: 1100px;` 或百分比 `width: 85%;`
+- **大屏断点**：在下方 `@media (min-width: ...)` 中调整各分辨率对应的最大卡片宽度
 
 ## 📄 许可
 
@@ -120,7 +127,7 @@ This is a full design-language realignment, not just a recolor:
 
 - 🔤 **Serif headings** — Source Serif 4 / Charter / Georgia stack; the signature "editorial" feel of Claude.ai
 - ✒️ **Serif italic `<em>`** — Inline emphasis automatically renders in serif italic
-- 📏 **780px reading width** — Narrowed from 80% to the golden ~70-character measure
+- 📏 **Adaptive multi-tier width** — Default 85% width (up to 1100px) with automatic scaling for 1080p (1280px), 2K (1500px), and 4K/ultrawide (1800px) displays
 - 🎭 **Minimal blockquotes** — Background and italics removed; only a coral left border remains
 - 📐 **Flattened shadows** — Page card shadow reduced from heavy `0 10px 25px` to a subtle 1px ring
 - 🎨 **Warmer paper palette** — Background, text, and borders recalibrated to match Claude's UI
@@ -134,6 +141,7 @@ This is a full design-language realignment, not just a recolor:
 - 🎨 **Warm paper palette** — Off-white base `#FAF7F0` with Claude's signature coral `#C15F3C`
 - 🔤 **Serif + sans mix** — Serif headings, sans body, serif italics — full editorial treatment
 - 📝 **Comprehensive Markdown coverage** — Headings, blockquotes, code, tables, task lists, all polished
+- 🖥️ **Resolution-adaptive width** — Scales comfortably across laptops, 1080p, 2K, 4K, and ultrawide screens
 - 🧭 **Refined sidebar** — Rounded highlights and brand-filled active state
 - 🖱️ **Thoughtful micro-interactions** — Link hover, checkbox animation, floating scrollbar, selection
 - 🔤 **Graceful font fallbacks** — Works well across systems with or without optional fonts
@@ -175,6 +183,7 @@ Skipping these is fine — the font stack gracefully falls back to Georgia + sys
 
 ## 🛠️ Customization
 
+### Colors & Fonts
 Edit the CSS variables in the `:root` block at the top of `claude.css`:
 
 ```css
@@ -191,6 +200,11 @@ Edit the CSS variables in the `:root` block at the top of `claude.css`:
   --font-mono: 'JetBrains Mono', 'Consolas', monospace;
 }
 ```
+
+### Adjust Display Width
+Search for `#write` in `claude.css` to fine-tune width or breakpoints:
+- **Default width**: modify `max-width: 1100px;` or percentage `width: 85%;`
+- **Large screen thresholds**: customize `max-width` values under the `@media (min-width: ...)` blocks
 
 ## 📄 License
 
